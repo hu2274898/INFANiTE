@@ -72,7 +72,7 @@ You first need to perform slice-to-template registration to obtain aligned, isot
 **Registration code is coming soon.** Assuming you already have the aligned thick-slice volumes and segmentations:
 
 Step 2: Build a spatial weighting map W(x)  
-Construct the spatial weighting map W(x) following the idea in spatial_weighting.py.  
+Construct the spatial weighting map W(x) following the idea in **`spatial_weighting.py`**. **See `spatial_weighting.py` for full details.**
 Expected outputs (examples)
 ```bash
 spatial_weighting/
