@@ -24,8 +24,7 @@ INFANiTE is a physics-informed Implicit Neural Representation (INR) framework de
   <img src="assets/pipeline.png" width="900" alt="INFANiTE pipeline">
 </p>
 <p align="center">
-  <i><b>Figure 3.</b> Overview of the proposed framework INFANiTE.
-
+  <i><b>Figure 3.</b> Overview of the proposed framework INFANiTE.</i>
 
 The framework consists of three main stages:
 
@@ -70,7 +69,7 @@ pip install -r requirements.txt
 
 Step 1: Slice-to-Template Registration 
 You first need to perform slice-to-template registration to obtain aligned, isotropic thick-slice volumes in NIfTI format (*.nii.gz).  
-Registration code is coming soon. Assuming you already have the aligned thick-slice volumes and segmentations:
+**Registration code is coming soon.** Assuming you already have the aligned thick-slice volumes and segmentations:
 
 Step 2: Build a spatial weighting map W(x)  
 Construct the spatial weighting map W(x) following the idea in spatial_weighting.py.  
