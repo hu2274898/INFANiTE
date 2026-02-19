@@ -4,14 +4,14 @@
   <img src="assets/atlas_axial_sagittal_coronal_21_36w.gif" width="900" alt="Visual comparison of INFANiTE and baselines">
 </p>
 <p align="center">
-  <i>Visual comparison of INFANiTE vs. representative baselines across gestational ages (axial / sagittal / coronal).</i>
+  <i><b>Figure 1.</b> Visual comparison of INFANiTE vs. representative baselines across gestational ages (axial / sagittal / coronal).</i>
 </p>
 
 <p align="center">
   <img src="assets/development.png" width="900" alt="Developmental trajectories relative to normative models">
 </p>
 <p align="center">
-  <i>Atlas-derived tissue-volume trajectories compared with normative models (mean with ±1–3 SD bands).</i>
+  <i><b>Figure 2.</b> Atlas-derived tissue-volume trajectories compared with normative models (mean with ±1–3 SD bands).</i>
 </p>
 
 ---
@@ -23,6 +23,9 @@ INFANiTE is a physics-informed Implicit Neural Representation (INR) framework de
 <p align="center">
   <img src="assets/pipeline.png" width="900" alt="INFANiTE pipeline">
 </p>
+<p align="center">
+  <i><b>Figure 3.</b> Overview of the proposed framework INFANiTE.
+
 
 The framework consists of three main stages:
 
@@ -140,7 +143,7 @@ Training hyperparameters and other settings can be configured in:
 ---
 
 
-## 🧪 Training
+## 🧪 Training and atlas generation
 
 ```bash
 python run.py
@@ -150,7 +153,8 @@ python run.py
 
 ## 📊 Results
 
-P1. Image quality on Multi-Stack / Single-Stack datasets
+P1. Image quality on Multi-Stack / Single-Stack datasets. **Bold**: best. <ins>Underline</ins>: runner-up
+
 Metrics: subject consistency (HD95, ASD, DSC), intrinsic quality (TCT), reference fidelity (PSNR/SSIM against test subjects: subscript r; pseudo GT atlas: subscript a).
 
 Multi-Stack dataset:
@@ -161,31 +165,32 @@ Multi-Stack dataset:
 | Atlas-GAN | 2.9080 | 1.0854 | 0.7348 | 0.1590 | 12.9860 | 0.4926 | 16.1068 | 0.6228 |
 |    SyGN   | 2.8669 | 1.0661 | 0.7395 | 0.1330 | 13.1003 | 0.4983 | 16.2402 | 0.6138 |
 |  Aladdin  | 2.6061 | 0.9322 | 0.7711 | 0.5650 | 12.8262 | 0.4629 | 15.6580 | 0.5674 |
-|   CINeMA  | 2.4137 | 0.8766 | 0.7849 | 1.0133 | 15.0291 | 0.5091 | 19.5325 | 0.7073 |
-|  INFANiTE | 2.3572 | 0.8552 | 0.7865 | 0.9702 | 18.4754 | 0.5662 | 22.3165 | 0.7854 |
+|   CINeMA  | <ins>2.4137</ins> | <ins>0.8766</ins> | <ins>0.7849</ins> | **1.0133** | <ins>15.0291</ins> | <ins>0.5091</ins> | <ins>19.5325</ins> | <ins>0.7073</ins> |
+|  INFANiTE | **2.3572** | **0.8552** | **0.7865** | <ins>0.9702</ins> | **18.4754** | **0.5662** | **22.3165** | **0.7854** |
 
 Single-Stack dataset:
 
 |   Method  |  HD95  |   ASD  |   DSC  |   TCT  |  PSNRr  |  SSIMr |  PSNRa  |  SSIMa |
 | :-------: | :----: | :----: | :----: | :----: | :-----: | :----: | :-----: | :----: |
 |  Deepali  | 3.2914 | 1.2065 | 0.7013 | 0.2794 | 12.5151 | 0.3692 | 14.1211 | 0.4239 |
-| Atlas-GAN | 3.0763 | 1.1366 | 0.7191 | 0.1638 | 14.1648 | 0.4958 | 17.1474 | 0.6233 |
+| Atlas-GAN | 3.0763 | 1.1366 | 0.7191 | 0.1638 | 14.1648 | <ins>0.4958</ins> | 17.1474 | 0.6233 |
 |    SyGN   | 3.0873 | 1.1406 | 0.7175 | 0.1556 | 13.9070 | 0.4821 | 16.7512 | 0.5869 |
-|  Aladdin  | 2.7356 | 0.9733 | 0.7536 | 0.5226 | 12.7240 | 0.4424 | 15.2615 | 0.5307 |
-|   CINeMA  | 2.7548 | 0.9860 | 0.7663 | 0.9308 | 14.2107 | 0.4859 | 18.0846 | 0.6507 |
-|  INFANiTE | 2.5394 | 0.9153 | 0.7721 | 0.8143 | 18.4786 | 0.5533 | 21.6521 | 0.7593 |
+|  Aladdin  | <ins>2.7356</ins> | <ins>0.9733</ins> | 0.7536 | 0.5226 | 12.7240 | 0.4424 | 15.2615 | 0.5307 |
+|   CINeMA  | 2.7548 | 0.9860 | <ins>0.7663</ins> | **0.9308** | <ins>14.2107</ins> | 0.4859 | <ins>18.0846</ins> | <ins>0.6507</ins> |
+|  INFANiTE | **2.5394** | **0.9153** | **0.7721** | <ins>0.8143</ins> | **18.4786** | **0.5533** | **21.6521** | **0.7593** |
 
-P2. Biological plausibility (Multi-Stack dataset)
+P2. Biological plausibility (Multi-Stack dataset). **Bold**: best. <ins>Underline</ins>: runner-up
+
 Reported as L1 error (cm³) between atlas-derived tissue volumes and normative developmental trajectories.
 
 |   Method  |   TBV   |    WM   |   BS   |   cGM  |   dGM  |   CSF  | Cereb. |  Vent. |
 | :-------: | :-----: | :-----: | :----: | :----: | :----: | :----: | :----: | :----: |
-|  Deepali  | 17.1868 | 17.0883 | 0.1136 | 4.0106 | 2.9608 | 6.9662 | 0.2937 | 0.7056 |
-| Atlas-GAN | 18.2885 | 16.8882 | 0.1418 | 3.3539 | 2.4323 | 7.4958 | 0.3503 | 0.6559 |
-|    SyGN   | 10.4882 | 12.7053 | 0.2587 | 4.6551 | 1.8042 | 2.8200 | 0.3089 | 0.6250 |
-|  Aladdin  |  4.2071 |  4.2575 | 0.3199 | 5.8404 | 1.7586 | 6.8455 | 0.3943 | 1.1958 |
-|   CINeMA  | 15.3309 |  9.3550 | 0.2904 | 6.8382 | 2.6446 | 4.8110 | 0.6120 | 1.6866 |
-|  INFANiTE |  4.9467 |  3.7115 | 0.0941 | 5.6733 | 1.1852 | 3.0104 | 0.4880 | 1.3119 |
+|  Deepali  | 17.1868 | 17.0883 | <ins>0.1136</ins> | <ins>4.0106</ins> | 2.9608 | 6.9662 | **0.2937** | 0.7056 |
+| Atlas-GAN | 18.2885 | 16.8882 | 0.1418 | **3.3539** | 2.4323 | 7.4958 | 0.3503 | <ins>0.6559</ins> |
+|    SyGN   | 10.4882 | 12.7053 | 0.2587 | 4.6551 | 1.8042 | **2.8200** | <ins>0.3089</ins> | **0.6250** |
+|  Aladdin  | **4.2071** | <ins>4.2575</ins> | 0.3199 | 5.8404 | <ins>1.7586</ins> | 6.8455 | 0.3943 | 1.1958 |
+|   CINeMA  | 15.3309 | 9.3550 | 0.2904 | 6.8382 | 2.6446 | 4.8110 | 0.6120 | 1.6866 |
+|  INFANiTE | <ins>4.9467</ins> | **3.7115** | **0.0941** | 5.6733 | **1.1852** | <ins>3.0104</ins> | 0.4880 | 1.3119 |
 
 ## 🙏 Acknowledgments
 
