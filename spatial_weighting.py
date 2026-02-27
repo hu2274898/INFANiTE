@@ -6,12 +6,12 @@ import nibabel as nib
 # What are mask1 / mask2 / mask3 / img?
 #
 # mask1 (mask1_path):
-#   A voxel-identifier / index map A defined in the *original* stack space.
+#   A voxel-identifier / index map O defined in the *original* stack space.
 #   Each voxel location is assigned a unique integer ID (0 = background).
 #   This is used to distinguish truly observed voxels from interpolated ones.
 #
 # mask2 (mask2_path):
-#   The transformed identifier map A after registration / resampling into
+#   The transformed identifier map O after registration / resampling into
 #   the template space. Because resampling introduces interpolation, the
 #   values in mask2 may become non-integer or slightly shifted, but they
 #   still encode where each original voxel ID ends up in the aligned space.
