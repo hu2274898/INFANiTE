@@ -191,6 +191,10 @@ Reported as L1 error (cm³) between atlas-derived tissue volumes and normative d
 |   CINeMA  | 15.3309 | 9.3550 | 0.2904 | 6.8382 | 2.6446 | 4.8110 | 0.6120 | 1.6866 |
 |  INFANiTE | <ins>4.9467</ins> | **3.7115** | **0.0941** | 5.6733 | **1.1852** | <ins>3.0104</ins> | 0.4880 | 1.3119 |
 
+## Implementation Details
+
+We implemented **INFANiTE** in PyTorch and trained the model on a single **NVIDIA H100 GPU (80GB)** for **5 epochs** with a subject batch size of **250**. For each iteration, we sampled **18,000** 3D coordinates and used **16** dataloader workers. The implicit decoder was a **SIREN** MLP with hidden size **1024** and **5** hidden layers, modulated by a latent code of dimension $[256,3,3,3]$ at layers $\{1,3,5\}$ with $\omega=(30,30)$. To model acquisition blur, we apply a PSF-based Monte Carlo averaging by querying the decoder at Gaussian-perturbed coordinates and averaging the predictions; we set $P=4$ (epoch 0), $P=8$ (epoch 1), and $P=16$ (epochs $\ge 2$), with $\sigma=(0.02,0.02,0.02)$. We generated isotropic atlases at **0.8 mm** spacing across gestational ages **21–39 weeks**.
+
 ## 🙏 Acknowledgments
 
 We gratefully acknowledge the contributions of the following projects:
