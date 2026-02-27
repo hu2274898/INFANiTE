@@ -1,0 +1,20 @@
+fetal: # dhcp preterm multimodal dataset config
+  dataset_name: fetal_atlas
+  subject_ids: ./configs/subject_ids.yaml
+  tsv_file: ./configs/fetal.tsv
+  modalities: ['T2w', 'Seg'] # modality names in the tsv file
+  conditions:  # conditions with number of dimensions possibly used for atlas conditioning
+    scan_age: false
+    birth_age: false
+  constraints:  # sample only subjects that meet all constraints
+    scan_age: 
+      type: numeric
+      min: 21
+      max: 39
+      distribution: 
+        type: 'uniform_fillup'
+        priority: 0 # higher priority means more important
+  label_names: ['ClearLabel', 'WM', 'Ventricles', 'cerebellum', 'CSF', 'GM', 'Deep_GM', 'Brainstem', 'Corpus Callosum','bg']
+  class_weights: [0.00, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,1.0]
+  world_bbox: [108, 151.2, 124] # size of the (roughly) smallest COMMON bounding box for all subjects in mm
+  normalize_values: 'minmax' # 'minmax' or 'zscore'

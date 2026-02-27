@@ -1,0 +1,110 @@
+root_dir: '' # if empty, use current working directory
+
+# --------- Logging Parameters ---------
+logging: False # if True, log to wandb
+output_dir: ./INFANiTE_result # directory to save the model, reconstruction images, atlases, etc.
+wandb_entity: # wandb entity
+project_name: INFANiTE # wandb project name
+config_data: fetal # name of the dataset to use (specified in config_data.yaml)
+
+# --------- Device Parameters ---------
+device: cuda
+device_dataset: cpu
+amp: True
+seed: 42
+
+# --------- General Options ---------
+generate_cond_atlas: True # if True, generate the spatio-temporal (conditioned) atlas 
+mask_reconstruction: True # mask inference reconstruction to remove noisy background
+save_certainty_maps: False # if True, save the certainty maps (tissue probability maps)
+compute_metrics: True # if True, compute the metrics for subject adaptation (requires GT references for each modality)
+save_imgs: # if True, save the reconstruction images for the training/validation set
+  train: True 
+  val: True
+save_model: True # if True, save the model to output_dir
+load_model: 
+  path: ""  
+  epoch: 1 # which epoch to load
+
+# --------- Data Augmentation Parameters ---------
+# not used in the publication.
+data_augmentation:
+  activate: False
+  # individual augmentations
+  augment_deformation:
+    p: 0.3
+    num_control_points: 7
+    max_displacement: 7.5
+  augment_motion:
+    p: 0.3
+    degrees: 5
+    translation: 5
+    num_transforms: 4
+  augment_noise: 
+    p: 0.3
+    mean: 1.5
+    std: 3.0
+  augment_biasfield:
+    p: 0.3
+    coeff: 1.0
+  augment_gamma: 
+    p: 0.3
+    log_gamma: 0.4
+
+# --------- Optimizer Parameters ---------
+optimizer:
+  re_init_latents: False # if True, re-initialize latent codes from gaussian distribution after each epoch
+  lr_inr: 1.0e-4
+  inr_weight_decay: 0.0
+  lr_latent: 5.0e-4
+  latent_weight_decay: 0.0
+  lr_tf: 7.5e-3
+  tf_weight_decay: 0.0
+  tf_weight: 0.0
+  loss_metric: 'l1'
+  seg_weight: 1.0
+  scheduler:
+    type: 'cosine'
+    eta_min: 2.5e-5
+
+
+# --------- INR Decoder Parameters ---------
+inr_decoder:
+  tf_dim: 6 # 0 = off, 6 = rigid, 9 = rigid + scaling
+  cnn_kernel_size: 0 # kernel size for the CNN for spatial modulation, if 0 no CNN is used
+  latent_dim: [256, 3, 3, 3] # latent code dimension, [latent_dim, X, Y, Z]
+  in_dim: 3 # input dimension of the coordinates, e.g. 3 for 3D images
+  out_dim: [1, 10] #(number of modalities (not counting segmentation), number of segmentation channels)
+  hidden_size: 1024 # hidden size of the MLP
+  num_hidden_layers: 5 # number of hidden layers of the MLP
+  modulated_layers: [1, 3, 5] # layers that are modulated by the latent code
+  omega: [30, 30] # first and hidden omega of SIREN
+
+
+# --------- Atlas Generation Parameters ---------
+atlas_gen:
+  spacing: [0.8, 0.8, 0.8] # spacing of the atlas in mm
+  temporal_values: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] # steps in the temporal dimension (scan age_min, scan age_max)
+  conditions: # conditions to use for the atlas generation (must be specified and activated in config_data.yaml)
+  # the condtions are combined with each temporal values --> exponential increase of combinations with each condition!!
+    
+  # --- Mean Latent Regression ---
+  gaussian_span: 1.0 # in weeks. +/- weeks of scan age to cover 95% of the weights, 
+                     # i.e. 95% of the latent code of an atlas of age 30 weeks is made up 
+                     # of latent codes from subjects with scan age 30 +/- 0.75 weeks, [29.25, 30.75]
+  cond_scale: 0.05   # scaling factor for the condition vector 
+                     # to adjust condition value range to latent code value range
+
+# --------- Training Parameters ---------
+n_subjects: # number of subjects to use for training/validation
+  train: 600 
+epochs: # number of epochs for training/validation
+  train: 5
+spatial_weighting:
+  path: ./mask_samples_flat
+  w_obs: 1.6
+  w_int: 0.8
+validate_every: 1
+batch_size: 250 # batch size for training/validation (number of subjects per batch)
+n_samples: 18000 # number of coordinates in each "inner_batch" sampled across the subejct batch
+num_workers: 16 # number of workers for dataloader
