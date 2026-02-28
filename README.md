@@ -4,7 +4,7 @@
   <img src="assets/atlas_axial_sagittal_coronal_21_36w.gif" width="900" alt="Visual comparison of INFANiTE and baselines">
 </p>
 <p align="center">
-  <i><b>Figure 1.</b> Visual comparison of INFANiTE vs. representative baselines across gestational ages (axial / sagittal / coronal).</i>
+  <i><b>Figure 1.</b> Visual comparison of INFANiTE vs. baselines across gestational ages (axial / sagittal / coronal).</i>
 </p>
 
 <p align="center">
